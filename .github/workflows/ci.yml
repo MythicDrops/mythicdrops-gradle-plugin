@@ -8,10 +8,10 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     tags-ignore: [v*]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   gradle_wrapper_validation:
@@ -48,7 +48,7 @@ jobs:
         run: ./gradlew build --continue
       - name: Push tag and deploy to plugins.gradle.org
         if: github.event_name == 'push'
-          && github.ref == 'refs/heads/master'
+          && github.ref == 'refs/heads/main'
           && github.repository == 'MythicDrops/mythicdrops-gradle-plugin'
           && !contains(toJSON(github.event.commits.*.message), '[skip release]')
         run: ./gradlew publishPlugins githubRelease
