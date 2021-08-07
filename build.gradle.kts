@@ -1,4 +1,4 @@
-import Orchid.Plugins.changelog
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Duration
 
@@ -163,7 +163,7 @@ dependencies {
 }
 
 val generateChangelog = tasks.getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {
-    previousRevision = project.ext.get("shipkit-auto-version.previous-tag").toString()
+    previousRevision = project.ext.get("shipkit-auto-version.previous-tag")?.toString()
     githubToken = System.getenv("GITHUB_TOKEN")
     repository = "MythicDrops/mythicdrops-gradle-plugin"
 }

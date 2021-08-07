@@ -28,7 +28,7 @@ open class MythicDropsReleaseGitHubPlugin : Plugin<Project> {
 
         // configure tasks for creating a GitHub release
         target.tasks.withType<GenerateChangelogTask>().configureEach {
-            previousRevision = target.extra.get("shipkit-auto-version.previous-tag").toString()
+            previousRevision = target.extra.get("shipkit-auto-version.previous-tag")?.toString()
             githubToken = System.getenv("GITHUB_TOKEN")
             repository = githubReleaseExtension.repository
         }
