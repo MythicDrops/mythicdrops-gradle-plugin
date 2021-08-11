@@ -1,7 +1,5 @@
 package dev.mythicdrops.gradle.conventions
 
-import io.github.gradlenexus.publishplugin.NexusPublishExtension
-import io.github.gradlenexus.publishplugin.NexusPublishPlugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPom
@@ -36,37 +34,14 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
         }
 
         // gather signing parameters
-        val signingParams = SonatypeSigningNullableParams().toSigningParams()
-
-        // enable sonatype publishing and signing
-        enableSonatypePublishing(signingParams, target)
-    }
-
-    private fun enableSonatypePublishing(
-        sonatypeSigningParams: SonatypeSigningParams?,
-        target: Project
-    ) {
-        if (sonatypeSigningParams == null) {
-            // if any environment variables are null, do not enable Sonatype publishing or signing
-            return
-        }
+        val signingParams = SigningNullableParams().toSigningParams() ?: return
 
         target.pluginManager.apply(SigningPlugin::class)
         target.configure<SigningExtension> {
             // Uses ASCII-armored keys (typically provided on GitHub Actions)
-            useInMemoryPgpKeys(sonatypeSigningParams.pgpKey, sonatypeSigningParams.pgpPwd)
+            useInMemoryPgpKeys(signingParams.pgpKey, signingParams.pgpPwd)
             // Always sign Maven publications in case they go to Maven Central
             sign(target.extensions.getByType<PublishingExtension>().publications.matching { it is MavenPublication })
-        }
-
-        target.pluginManager.apply(NexusPublishPlugin::class)
-        target.configure<NexusPublishExtension> {
-            repositories {
-                sonatype {
-                    username.set(sonatypeSigningParams.sonatypeUser)
-                    password.set(sonatypeSigningParams.sonatypePwd)
-                }
-            }
         }
     }
 
@@ -95,9 +70,7 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
         }
     }
 
-    private data class SonatypeSigningParams(
-        val sonatypeUser: String,
-        val sonatypePwd: String,
+    private data class SigningParams(
         val pgpKey: String,
         val pgpPwd: String
     )
@@ -105,21 +78,17 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
     /**
      * Gets the nullable params needed for signing and configuring Sonatype.
      */
-    private data class SonatypeSigningNullableParams(
-        val sonatypeUser: String? = System.getenv("SONATYPE_USER"),
-        val sonatypePwd: String? = System.getenv("SONATYPE_PWD"),
+    private data class SigningNullableParams(
         val pgpKey: String? = System.getenv("PGP_KEY"),
         val pgpPwd: String? = System.getenv("PGP_PWD")
     ) {
         /**
          * Converts to a non-nullable version of the params, returning null if any values are null.
          */
-        fun toSigningParams(): SonatypeSigningParams? = when {
-            sonatypeUser == null -> null
-            sonatypePwd == null -> null
+        fun toSigningParams(): SigningParams? = when {
             pgpKey == null -> null
             pgpPwd == null -> null
-            else -> SonatypeSigningParams(sonatypeUser, sonatypePwd, pgpKey, pgpPwd)
+            else -> SigningParams(pgpKey, pgpPwd)
         }
     }
 }
