@@ -61,4 +61,3 @@ open class MythicDropsNexusStagingPlugin : Plugin<Project> {
         }
     }
 }
-7
