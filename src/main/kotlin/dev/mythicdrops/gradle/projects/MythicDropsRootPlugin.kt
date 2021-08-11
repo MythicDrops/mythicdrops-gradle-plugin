@@ -1,5 +1,6 @@
 package dev.mythicdrops.gradle.projects
 
+import dev.mythicdrops.gradle.release.MythicDropsNexusStagingPlugin
 import dev.mythicdrops.gradle.release.MythicDropsReleaseGitHubPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -17,5 +18,6 @@ open class MythicDropsRootPlugin : Plugin<Project> {
 
         target.pluginManager.apply("org.shipkit.shipkit-auto-version")
         target.pluginManager.apply(MythicDropsReleaseGitHubPlugin::class)
+        target.pluginManager.apply(MythicDropsNexusStagingPlugin::class)
     }
 }
