@@ -173,7 +173,7 @@ tasks.getByName<org.shipkit.github.release.GithubReleaseTask>("githubRelease") {
     repository = generateChangelog.repository
     changelog = generateChangelog.outputFile
     githubToken = System.getenv("GITHUB_TOKEN")
-    newTagRevision = System.getenv("GITHUB_TOKEN")
+    newTagRevision = System.getenv("GITHUB_SHA")
 }
 
 project.ext.set("gradle.publish.key", System.getenv("GRADLE_PUBLISH_KEY"))
