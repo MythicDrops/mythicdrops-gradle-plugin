@@ -84,7 +84,7 @@ mythicDropsRelease {
 The `dev.mythicdrops.gradle.convention.java` plugin will configure the following when applied to any project that also
 has the `java` plugin applied:
 
-- Configures the project to compile targeting JDK 1.8
+- Configures the project to compile targeting JDK 16
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`jacoco`](https://docs.gradle.org/current/userguide/jacoco_plugin.html) Gradle plugin
     - Configures the `jacoco` plugin to use JaCoCo 0.8.7
@@ -105,11 +105,11 @@ plugins {
 The `dev.mythicdrops.gradle.conventions.kotlin.jvm` plugin will configure the following when applied to any project that
 also has the `org.jetbrains.kotlin.jvm` plugin applied:
 
-- Configures the project to compile targeting JDK 1.8
+- Configures the project to compile targeting JDK 16
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`detekt`](https://detekt.github.io/detekt/gradle.html) Gradle plugin
 - Applies the [`ktlint`](https://github.com/JLLeitschuh/ktlint-gradle) Gradle plugin
-    - Configures the `ktlint` plugin to use KTLint 0.42.0
+    - Configures the `ktlint` plugin to use KTLint 0.42.1
 - Applies the [`dokka`](https://github.com/Kotlin/dokka) Gradle plugin
 - Configures Javadoc JARs to include dokka output
 
