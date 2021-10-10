@@ -1,6 +1,5 @@
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.time.Duration
 
 plugins {
     `kotlin-dsl`
@@ -77,33 +76,6 @@ pluginBundle {
     tags = listOf("kotlin", "pixeloutlaw", "convention")
 }
 
-// Separate integration tests from "fast" tests
-val intTest: SourceSet by sourceSets.creating {
-    compileClasspath += sourceSets.main.get().output + configurations.testRuntime.get()
-    runtimeClasspath += output + compileClasspath
-}
-val intTestImplementation: Configuration by configurations.getting {
-    extendsFrom(configurations.testImplementation.get())
-}
-val intTestRuntimeOnly: Configuration by configurations.getting {
-    extendsFrom(configurations.testImplementation.get())
-}
-val integrationTest by tasks.registering(Test::class) {
-    description = "Runs the functional tests"
-    group = JavaBasePlugin.VERIFICATION_GROUP
-
-    testClassesDirs = intTest.output.classesDirs
-    classpath = intTest.runtimeClasspath
-    shouldRunAfter(tasks.test)
-
-    reports {
-        html.outputLocation.set(file("${html.outputLocation.get()}/functional"))
-        junitXml.outputLocation.set(file("${junitXml.outputLocation.get()}/functional"))
-    }
-
-    timeout.set(Duration.ofMinutes(2))
-}
-
 tasks {
     // get dokkaJavadoc task and make javadocJar depend on it
     val dokkaJavadoc by this
@@ -120,11 +92,6 @@ tasks {
     // use JUnit Jupiter
     withType<Test>() {
         useJUnitPlatform()
-    }
-
-    // check depends on integration tests to run
-    check {
-        dependsOn(integrationTest.get())
     }
 }
 
