@@ -12,14 +12,26 @@ import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 /**
- * Plugin that configures Java for JDK 1.8 and enables JaCoCo.
+ * Plugin that configures Java for JDK 16 and enables JaCoCo.
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
+    companion object {
+        /**
+         * Version of Java supported by the plugin.
+         */
+        const val JAVA_VERSION = 16
+
+        /**
+         * Version of Java supported by the plugin.
+         */
+        val javaLanguageVersion = JavaLanguageVersion.of(JAVA_VERSION)
+    }
+
     override fun configureProject(target: Project) {
-        // target JDK 1.8
+        // target JDK 16
         target.configure<JavaPluginExtension> {
             toolchain {
-                languageVersion.set(JavaLanguageVersion.of(16))
+                languageVersion.set(javaLanguageVersion)
             }
         }
 

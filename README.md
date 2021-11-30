@@ -109,7 +109,7 @@ also has the `org.jetbrains.kotlin.jvm` plugin applied:
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`detekt`](https://detekt.github.io/detekt/gradle.html) Gradle plugin
 - Applies the [`ktlint`](https://github.com/JLLeitschuh/ktlint-gradle) Gradle plugin
-    - Configures the `ktlint` plugin to use KTLint 0.42.1
+    - Configures the `ktlint` plugin to use KTLint 0.43.0
 - Applies the [`dokka`](https://github.com/Kotlin/dokka) Gradle plugin
 - Configures Javadoc JARs to include dokka output
 
