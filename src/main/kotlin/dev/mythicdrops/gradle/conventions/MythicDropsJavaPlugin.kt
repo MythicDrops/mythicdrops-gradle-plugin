@@ -1,10 +1,10 @@
 package dev.mythicdrops.gradle.conventions
 
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
@@ -12,14 +12,27 @@ import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
 /**
- * Plugin that configures Java for JDK 1.8 and enables JaCoCo.
+ * Plugin that configures Java for JDK 16 and enables JaCoCo.
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
+    companion object {
+        /**
+         * Version of Java supported by the plugin.
+         */
+        const val JAVA_VERSION = 16
+
+        /**
+         * Version of Java supported by the plugin.
+         */
+        val javaLanguageVersion = JavaLanguageVersion.of(JAVA_VERSION)
+    }
+
     override fun configureProject(target: Project) {
-        // target JDK 1.8
+        // target JDK 16
         target.configure<JavaPluginExtension> {
-            sourceCompatibility = JavaVersion.VERSION_16
-            targetCompatibility = JavaVersion.VERSION_16
+            toolchain {
+                languageVersion.set(javaLanguageVersion)
+            }
         }
 
         // enable passing `-parameters` to javac

@@ -1,20 +1,21 @@
 package dev.mythicdrops.gradle.conventions
 
 import io.gitlab.arturbosch.detekt.DetektPlugin
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.jvm.toolchain.JavaToolchainSpec
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 /**
- * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.42.1.
+ * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.43.0.
  */
 open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbrains.kotlin.jvm") {
     override fun configureProject(target: Project) {
@@ -23,16 +24,21 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         target.pluginManager.apply(DokkaPlugin::class.java)
         target.pluginManager.apply(KtlintPlugin::class.java)
 
-        // set ktlint version to 0.42.1
-        target.configure<KtlintExtension> {
-            version.set("0.42.1")
+        // configure kotlin to use JDK 16
+        target.configure<KotlinJvmProjectExtension> {
+            jvmToolchain {
+                (this as JavaToolchainSpec).languageVersion.set(MythicDropsJavaPlugin.javaLanguageVersion)
+            }
         }
 
-        // configure kotlin to use JDK 16
+        // set ktlint version to 0.43.0
+        target.configure<KtlintExtension> {
+            version.set("0.43.0")
+        }
+
         target.tasks.withType<KotlinCompile> {
             kotlinOptions {
                 javaParameters = true
-                jvmTarget = JavaVersion.VERSION_16.toString()
             }
         }
 
