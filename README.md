@@ -40,7 +40,7 @@ The `dev.mythicdrops.gradle.project.base` plugin will configure the following wh
 
 - Applies the [`nebula.project`](https://github.com/nebula-plugins/nebula-project-plugin) Gradle plugin
 - Applies the [`com.adarshr.test-logger`](https://github.com/radarsh/gradle-test-logger-plugin) Gradle plugin
-    - Configures the `com.adarshr.test-logger` plugin to use
+  - Configures the `com.adarshr.test-logger` plugin to use
       the [Mocha theme](https://github.com/radarsh/gradle-test-logger-plugin#mocha-theme)
 - Configures all test tasks to use JUnit Jupiter
 
@@ -87,7 +87,7 @@ has the `java` plugin applied:
 - Configures the project to compile targeting JDK 16
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`jacoco`](https://docs.gradle.org/current/userguide/jacoco_plugin.html) Gradle plugin
-    - Configures the `jacoco` plugin to use JaCoCo 0.8.7
+  - Configures the `jacoco` plugin to use JaCoCo 0.8.7
 - Configures tests to be finalized by running a JaCoCo code coverage report
 
 #### Usage
@@ -109,7 +109,7 @@ also has the `org.jetbrains.kotlin.jvm` plugin applied:
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`detekt`](https://detekt.github.io/detekt/gradle.html) Gradle plugin
 - Applies the [`ktlint`](https://github.com/JLLeitschuh/ktlint-gradle) Gradle plugin
-    - Configures the `ktlint` plugin to use KTLint 0.43.0
+  - Configures the `ktlint` plugin to use KTLint 0.43.0
 - Applies the [`dokka`](https://github.com/Kotlin/dokka) Gradle plugin
 - Configures Javadoc JARs to include dokka output
 

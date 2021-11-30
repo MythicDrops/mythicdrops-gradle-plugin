@@ -1,8 +1,10 @@
 package dev.mythicdrops.gradle.conventions
 
+import dev.mythicdrops.gradle.findOrCreateMythicDropsJavaExtension
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.jvm.toolchain.JavaToolchainSpec
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByName
@@ -19,6 +21,8 @@ import org.jlleitschuh.gradle.ktlint.KtlintPlugin
  */
 open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbrains.kotlin.jvm") {
     override fun configureProject(target: Project) {
+        val javaExtension = target.extensions.findOrCreateMythicDropsJavaExtension()
+
         // apply plugins
         target.pluginManager.apply(DetektPlugin::class.java)
         target.pluginManager.apply(DokkaPlugin::class.java)
@@ -27,7 +31,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         // configure kotlin to use JDK 16
         target.configure<KotlinJvmProjectExtension> {
             jvmToolchain {
-                (this as JavaToolchainSpec).languageVersion.set(MythicDropsJavaPlugin.javaLanguageVersion)
+                (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion))
             }
         }
 

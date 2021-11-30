@@ -1,5 +1,6 @@
 package dev.mythicdrops.gradle.conventions
 
+import dev.mythicdrops.gradle.findOrCreateMythicDropsJavaExtension
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.compile.JavaCompile
@@ -15,23 +16,13 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  * Plugin that configures Java for JDK 16 and enables JaCoCo.
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
-    companion object {
-        /**
-         * Version of Java supported by the plugin.
-         */
-        const val JAVA_VERSION = 16
-
-        /**
-         * Version of Java supported by the plugin.
-         */
-        val javaLanguageVersion = JavaLanguageVersion.of(JAVA_VERSION)
-    }
-
     override fun configureProject(target: Project) {
+        val javaExtension = target.extensions.findOrCreateMythicDropsJavaExtension()
+
         // target JDK 16
         target.configure<JavaPluginExtension> {
             toolchain {
-                languageVersion.set(javaLanguageVersion)
+                languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion))
             }
         }
 
