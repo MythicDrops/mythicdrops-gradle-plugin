@@ -128,6 +128,9 @@ dependencies {
 
     // gradle nexus publish plugin
     implementation("io.github.gradle-nexus:publish-plugin:_")
+
+    // github api
+    implementation("org.kohsuke:github-api:1.301")
 }
 
 val generateChangelog = tasks.getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {
