@@ -27,6 +27,12 @@ open class MythicDropsReleaseGitHubPlugin : Plugin<Project> {
         target.pluginManager.apply("org.shipkit.shipkit-github-release")
 
         // configure tasks for creating a GitHub release
+        target.tasks.register("githubReleaseAssetUpload", MythicDropsGitHubReleaseAssetUploadTask::class.java) {
+            githubApiUrl.set("https://api.github.com")
+            releaseTag.set("v${target.version}")
+            repository.set(githubReleaseExtension.repository)
+            githubToken.set(System.getenv("GITHUB_TOKEN"))
+        }
         target.tasks.withType<GenerateChangelogTask>().configureEach {
             previousRevision = target.extra.get("shipkit-auto-version.previous-tag")?.toString()
             githubToken = System.getenv("GITHUB_TOKEN")
@@ -34,6 +40,7 @@ open class MythicDropsReleaseGitHubPlugin : Plugin<Project> {
         }
         target.tasks.withType<GithubReleaseTask>().configureEach {
             dependsOn(target.tasks.getByName("generateChangelog"))
+            finalizedBy(target.tasks.getByName("githubReleaseAssetUpload"))
             repository = githubReleaseExtension.repository
             changelog = target.tasks.getByName<GenerateChangelogTask>("generateChangelog").outputFile
             githubToken = System.getenv("GITHUB_TOKEN")
