@@ -115,7 +115,6 @@ dependencies {
     // shipkit
     implementation("org.shipkit:shipkit-auto-version:_")
     implementation("org.shipkit:shipkit-changelog:_")
-    implementation("org.shipkit:shipkit-auto-version:_")
 
     // test logger plugin
     implementation("com.adarshr:gradle-test-logger-plugin:_")
@@ -130,7 +129,7 @@ dependencies {
     implementation("io.github.gradle-nexus:publish-plugin:_")
 
     // github api
-    implementation("org.kohsuke:github-api:1.301")
+    implementation("org.kohsuke:github-api:_")
 }
 
 val generateChangelog = tasks.getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {

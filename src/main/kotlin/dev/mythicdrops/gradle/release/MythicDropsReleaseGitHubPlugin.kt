@@ -32,16 +32,17 @@ open class MythicDropsReleaseGitHubPlugin : Plugin<Project> {
             releaseTag.set("v${target.version}")
             repository.set(githubReleaseExtension.repository)
             githubToken.set(System.getenv("GITHUB_TOKEN"))
+            assets.from(githubReleaseExtension.assets)
         }
         target.tasks.withType<GenerateChangelogTask>().configureEach {
             previousRevision = target.extra.get("shipkit-auto-version.previous-tag")?.toString()
             githubToken = System.getenv("GITHUB_TOKEN")
-            repository = githubReleaseExtension.repository
+            repository = githubReleaseExtension.repository.get()
         }
         target.tasks.withType<GithubReleaseTask>().configureEach {
             dependsOn(target.tasks.getByName("generateChangelog"))
             finalizedBy(target.tasks.getByName("githubReleaseAssetUpload"))
-            repository = githubReleaseExtension.repository
+            repository = githubReleaseExtension.repository.get()
             changelog = target.tasks.getByName<GenerateChangelogTask>("generateChangelog").outputFile
             githubToken = System.getenv("GITHUB_TOKEN")
             newTagRevision = System.getenv("GITHUB_SHA")
