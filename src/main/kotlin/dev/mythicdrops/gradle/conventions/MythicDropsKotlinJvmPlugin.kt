@@ -1,6 +1,5 @@
 package dev.mythicdrops.gradle.conventions
 
-import dev.mythicdrops.gradle.findOrCreateMythicDropsJavaExtension
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.bundling.Jar
@@ -8,6 +7,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.jvm.toolchain.JavaToolchainSpec
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByName
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
@@ -17,11 +17,11 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 /**
- * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.43.0.
+ * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.45.2.
  */
 open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbrains.kotlin.jvm") {
     override fun configureProject(target: Project) {
-        val javaExtension = target.extensions.findOrCreateMythicDropsJavaExtension()
+        val javaExtension = target.extensions.getByType<MythicDropsJavaExtension>()
 
         // apply plugins
         target.pluginManager.apply(DetektPlugin::class.java)
@@ -31,13 +31,14 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         // configure kotlin to use JDK 16
         target.configure<KotlinJvmProjectExtension> {
             jvmToolchain {
-                (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion))
+                (this as JavaToolchainSpec).languageVersion
+                    .set(JavaLanguageVersion.of(javaExtension.javaVersion.get().majorVersion))
             }
         }
 
-        // set ktlint version to 0.43.0
+        // set ktlint version to 0.45.2
         target.configure<KtlintExtension> {
-            version.set("0.43.0")
+            version.set("0.45.2")
         }
 
         target.tasks.withType<KotlinCompile> {

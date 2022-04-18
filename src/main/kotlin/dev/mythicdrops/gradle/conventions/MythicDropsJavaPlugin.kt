@@ -1,12 +1,13 @@
 package dev.mythicdrops.gradle.conventions
 
-import dev.mythicdrops.gradle.findOrCreateMythicDropsJavaExtension
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPlugin
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
@@ -17,12 +18,17 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
     override fun configureProject(target: Project) {
-        val javaExtension = target.extensions.findOrCreateMythicDropsJavaExtension()
+        val javaExtension = target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava")
+        javaExtension.apply {
+            if (!javaVersion.isPresent) {
+                javaVersion.set(JavaVersion.VERSION_16)
+            }
+        }
 
         // target JDK 16
         target.configure<JavaPluginExtension> {
             toolchain {
-                languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion))
+                languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion.get().majorVersion))
             }
         }
 
