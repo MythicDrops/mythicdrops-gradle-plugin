@@ -25,18 +25,9 @@ open class MythicDropsPlugin : Plugin<Project> {
         // the other plugins we orchestrate are all able to go on `allprojects`
         target.allprojects {
             pluginManager.apply(MythicDropsBasePlugin::class)
-
-            pluginManager.withPlugin("java") {
-                pluginManager.apply(MythicDropsJavaPlugin::class)
-            }
-
-            pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-                pluginManager.apply(MythicDropsKotlinJvmPlugin::class)
-            }
-
-            pluginManager.withPlugin("maven-publish") {
-                pluginManager.apply(MythicDropsMavenPublishPlugin::class)
-            }
+            pluginManager.apply(MythicDropsJavaPlugin::class)
+            pluginManager.apply(MythicDropsKotlinJvmPlugin::class)
+            pluginManager.apply(MythicDropsMavenPublishPlugin::class)
         }
     }
 }

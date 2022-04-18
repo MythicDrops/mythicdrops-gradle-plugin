@@ -15,16 +15,15 @@ abstract class DependentPlugin(
     private val prerequisitePluginId: String
 ) : Plugin<Project> {
     override fun apply(target: Project) {
-        if (!target.pluginManager.hasPlugin(prerequisitePluginId)) {
+        target.pluginManager.withPlugin(prerequisitePluginId) {
             target.logger.log(
-                LogLevel.QUIET,
-                "Not applying MythicDrops {} plugin as the \"{}\" plugin isn't applied",
+                LogLevel.INFO,
+                "Applying MythicDrops {} plugin as the \"{}\" plugin is applied",
                 pluginDescription,
                 prerequisitePluginId
             )
-            return
+            configureProject(target)
         }
-        configureProject(target)
     }
 
     abstract fun configureProject(target: Project)
