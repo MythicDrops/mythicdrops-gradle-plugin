@@ -56,6 +56,12 @@ gradlePlugin {
             description = "Common conventions for all MythicDrops Java Gradle projects."
             implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsJavaPlugin"
         }
+        create("mythicDropsConventionJavaPlatform") {
+            id = "dev.mythicdrops.gradle.convention.java-platform"
+            displayName = "mythicDropsGradleConventionJavaPlatform"
+            description = "Common conventions for all MythicDrops Java Platform Gradle projects."
+            implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsJavaPlatformPlugin"
+        }
         create("mythicDropsConventionKotlinJvm") {
             id = "dev.mythicdrops.gradle.convention.kotlin.jvm"
             displayName = "mythicDropsGradleConventionKotlinJvm"
