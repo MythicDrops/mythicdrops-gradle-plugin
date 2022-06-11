@@ -14,7 +14,7 @@ jobs:
   gradle_wrapper_validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3
         with:
           fetch-depth: "0" # https://github.com/shipkit/shipkit-auto-version#fetch-depth-on-ci
       - name: Gradle wrapper validation
@@ -26,15 +26,24 @@ jobs:
     needs: [gradle_wrapper_validation]
     if: "! contains(toJSON(github.event.commits.*.message), '[skip release]')"
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3
         with:
           fetch-depth: "0" # https://github.com/shipkit/shipkit-auto-version#fetch-depth-on-ci
-      - name: Make gradlew Executable
-        run: chmod +x ./gradlew
-      - name: Run build
-        run: ./gradlew build --continue
-      - name: Push tag and deploy to plugins.gradle.org
-        run: ./gradlew publishPlugins githubRelease
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: adopt
+          java-version: 16
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Perform Build via Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build --continue --scan
+      - name: Publish Plugin and Create GitHub Release via Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: publishPlugins githubRelease --scan
         env:
           # Gradle env variables docs: https://docs.gradle.org/current/userguide/build_environment.html#sec:gradle_environment_variables
           GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}

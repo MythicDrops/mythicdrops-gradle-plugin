@@ -39,6 +39,10 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         // set ktlint version to 0.45.2
         target.configure<KtlintExtension> {
             version.set("0.45.2")
+            filter {
+                exclude("**/generated/**")
+                exclude("**/generated-sources/**")
+            }
         }
 
         target.tasks.withType<KotlinCompile> {
