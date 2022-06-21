@@ -20,9 +20,7 @@ open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
     override fun configureProject(target: Project) {
         val javaExtension = target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava")
         javaExtension.apply {
-            if (!javaVersion.isPresent) {
-                javaVersion.set(JavaVersion.VERSION_16)
-            }
+            javaVersion.convention(JavaVersion.VERSION_16)
         }
 
         // target JDK 16

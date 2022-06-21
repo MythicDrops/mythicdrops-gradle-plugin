@@ -88,7 +88,7 @@ has the `java` plugin applied:
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`jacoco`](https://docs.gradle.org/current/userguide/jacoco_plugin.html) Gradle plugin
   - Configures the `jacoco` plugin to use JaCoCo 0.8.7
-- Configures tests to be finalized by running a JaCoCo code coverage report
+- Configures test tasks to be finalized by running a JaCoCo code coverage report
 
 #### Usage
 

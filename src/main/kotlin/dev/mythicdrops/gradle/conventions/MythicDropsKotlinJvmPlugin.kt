@@ -17,7 +17,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 /**
- * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.45.2.
+ * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.46.0.
  */
 open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbrains.kotlin.jvm") {
     override fun configureProject(target: Project) {
@@ -36,9 +36,9 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
             }
         }
 
-        // set ktlint version to 0.45.2
+        // set ktlint version to 0.46.0
         target.configure<KtlintExtension> {
-            version.set("0.45.2")
+            version.set("0.46.0")
             filter {
                 exclude("**/generated/**")
                 exclude("**/generated-sources/**")
