@@ -92,12 +92,12 @@ tasks {
     }
 
     // compile targeting JDK8
-    withType<KotlinCompile>() {
+    withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }
 
     // use JUnit Jupiter
-    withType<Test>() {
+    withType<Test> {
         useJUnitPlatform()
     }
 }
@@ -108,6 +108,9 @@ repositories {
 }
 
 dependencies {
+    // kotlin reflection
+    implementation(kotlin("reflect"))
+
     // kotlin gradle plugin
     implementation(kotlin("gradle-plugin"))
 
