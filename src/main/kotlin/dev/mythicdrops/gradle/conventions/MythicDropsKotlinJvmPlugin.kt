@@ -13,8 +13,6 @@ import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 /**
  * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.46.0.
@@ -26,7 +24,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         // apply plugins
         target.pluginManager.apply(DetektPlugin::class.java)
         target.pluginManager.apply(DokkaPlugin::class.java)
-        target.pluginManager.apply(KtlintPlugin::class.java)
+        // target.pluginManager.apply(KtlintPlugin::class.java)
 
         // configure kotlin to use JDK 16
         target.configure<KotlinJvmProjectExtension> {
@@ -37,13 +35,13 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         }
 
         // set ktlint version to 0.46.0
-        target.configure<KtlintExtension> {
-            version.set("0.46.0")
-            filter {
-                exclude("**/generated/**")
-                exclude("**/generated-sources/**")
-            }
-        }
+        // target.configure<KtlintExtension> {
+        //     version.set("0.46.0")
+        //     filter {
+        //         exclude("**/generated/**")
+        //         exclude("**/generated-sources/**")
+        //     }
+        // }
 
         target.tasks.withType<KotlinCompile> {
             kotlinOptions {
