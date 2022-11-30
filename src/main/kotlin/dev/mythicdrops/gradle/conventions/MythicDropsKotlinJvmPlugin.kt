@@ -44,6 +44,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
                         include("**/*.kt")
                         exclude("**/build/generated/**")
                         exclude("**/build/kspCaches/**")
+                        exclude("**/build/generated-sources/**")
                     }
                 )
             }
