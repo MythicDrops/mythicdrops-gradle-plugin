@@ -1,7 +1,5 @@
 package dev.mythicdrops.gradle.conventions
 
-import com.diffplug.gradle.spotless.SpotlessExtension
-import com.diffplug.gradle.spotless.SpotlessPlugin
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.bundling.Jar
@@ -14,6 +12,10 @@ import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.konan.file.File
+import org.jmailen.gradle.kotlinter.KotlinterPlugin
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
 
 /**
  * Plugin that configures Kotlin for JDK 16, enables Detekt, and enables/configures KTLint to use 0.46.0.
@@ -25,7 +27,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         // apply plugins
         target.pluginManager.apply(DetektPlugin::class.java)
         target.pluginManager.apply(DokkaPlugin::class.java)
-        target.pluginManager.apply(SpotlessPlugin::class.java)
+        target.pluginManager.apply(KotlinterPlugin::class.java)
 
         // configure kotlin to use JDK 16
         target.configure<KotlinJvmProjectExtension> {
@@ -34,23 +36,12 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
             }
         }
 
-        // set ktlint version to 0.47.1
-        target.configure<SpotlessExtension> {
-            ratchetFrom("origin/main")
-            kotlin {
-                ktlint("0.47.1")
-                target(
-                    target.fileTree(target.projectDir) {
-                        include("**/*.kt")
-                        exclude("**/build/generated/**")
-                        exclude("**/build/kspCaches/**")
-                        exclude("**/build/generated-sources/**")
-                    }
-                )
-            }
-            kotlinGradle {
-                ktlint("0.47.1")
-            }
+        // exclude files from the build directory from being linted or formatted
+        target.tasks.withType<FormatTask> {
+            exclude { fte -> fte.file.absolutePath.contains("${File.separator}build${File.separator}") }
+        }
+        target.tasks.withType<LintTask> {
+            exclude { fte -> fte.file.absolutePath.contains("${File.separator}build${File.separator}") }
         }
 
         target.tasks.withType<KotlinCompile> {
