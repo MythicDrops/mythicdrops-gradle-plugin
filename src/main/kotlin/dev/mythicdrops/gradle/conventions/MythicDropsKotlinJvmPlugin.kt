@@ -43,6 +43,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
                     target.fileTree(target.projectDir) {
                         include("**/*.kt")
                         exclude("**/build/generated/**")
+                        exclude("**/build/kspCaches/**")
                     }
                 )
             }
