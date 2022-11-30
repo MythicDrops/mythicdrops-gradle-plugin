@@ -39,6 +39,12 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
             ratchetFrom("origin/main")
             kotlin {
                 ktlint("0.47.1")
+                target(
+                    target.fileTree(target.projectDir) {
+                        include("**/*.kt")
+                        exclude("**/build/generated/**")
+                    }
+                )
             }
             kotlinGradle {
                 ktlint("0.47.1")
