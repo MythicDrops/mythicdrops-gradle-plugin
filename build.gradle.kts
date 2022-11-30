@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `kotlin-dsl`
     `maven-publish`
-    id("org.jlleitschuh.gradle.ktlint")
+    id("com.diffplug.spotless")
     id("io.gitlab.arturbosch.detekt")
     id("org.jetbrains.dokka")
     id("com.gradle.plugin-publish")
@@ -83,6 +83,16 @@ pluginBundle {
     tags = listOf("kotlin", "pixeloutlaw", "convention")
 }
 
+spotless {
+    ratchetFrom("origin/main")
+    kotlin {
+        ktlint("0.47.1")
+    }
+    kotlinGradle {
+        ktlint("0.47.1")
+    }
+}
+
 tasks {
     // get dokkaJavadoc task and make javadocJar depend on it
     val dokkaJavadoc by this
@@ -132,7 +142,7 @@ dependencies {
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:_")
 
     // ktlint plugin
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:_")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:_")
 
     // gradle nexus publish plugin
     implementation("io.github.gradle-nexus:publish-plugin:_")
