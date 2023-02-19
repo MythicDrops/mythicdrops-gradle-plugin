@@ -3,7 +3,6 @@ package dev.mythicdrops.gradle.conventions
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
@@ -30,13 +29,6 @@ open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
             toolchain {
                 languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion.get().majorVersion))
             }
-        }
-
-        // enable passing `-parameters` to javac
-        target.tasks.withType<JavaCompile> {
-            options.compilerArgs.add("-parameters")
-            options.isFork = true
-            options.forkOptions.executable = "javac"
         }
 
         // enable and configure JaCoCo
