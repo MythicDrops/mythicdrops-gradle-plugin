@@ -95,20 +95,16 @@ tasks {
 
     getByName("generateChangelog") {
         dependsOn(
-            getByName("compileJava"),
-            getByName("compileKotlin"),
-            getByName("javadoc"),
-            getByName("dokkaJavadoc"),
-            getByName("inspectClassesForKotlinIC"),
-            getByName("javadocJar"),
-            getByName("sourcesJar")
+            "compileJava",
+            "compileKotlin",
+            "javadoc",
+            "dokkaJavadoc",
+            "inspectClassesForKotlinIC",
+            "javadocJar",
+            "sourcesJar",
+            "generateMetadataFileForPluginMavenPublication",
+            "generatePomFileForPluginMavenPublication"
         )
-        findByName("generateMetadataFileForPluginMavenPublication")?.let {
-            dependsOn(it)
-        }
-        findByName("generatePomFileForPluginMavenPublication")?.let {
-            dependsOn(it)
-        }
     }
 
     // use JUnit Jupiter
