@@ -99,8 +99,16 @@ tasks {
             getByName("compileKotlin"),
             getByName("javadoc"),
             getByName("dokkaJavadoc"),
-            getByName("inspectClassesForKotlinIC")
+            getByName("inspectClassesForKotlinIC"),
+            getByName("javadocJar"),
+            getByName("sourcesJar")
         )
+        findByName("generateMetadataFileForPluginMavenPublication")?.let {
+            dependsOn(it)
+        }
+        findByName("generatePomFileForPluginMavenPublication")?.let {
+            dependsOn(it)
+        }
     }
 
     // use JUnit Jupiter
