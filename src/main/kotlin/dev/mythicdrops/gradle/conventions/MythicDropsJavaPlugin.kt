@@ -13,17 +13,19 @@ import org.gradle.testing.jacoco.plugins.JacocoPlugin
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
+val DEFAULT_JAVA_VERSION = JavaVersion.VERSION_17
+
 /**
- * Plugin that configures Java for JDK 16 and enables JaCoCo.
+ * Plugin that configures Java for JDK 17 and enables JaCoCo.
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
     override fun configureProject(target: Project) {
         val javaExtension = target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava")
         javaExtension.apply {
-            javaVersion.convention(JavaVersion.VERSION_16)
+            // default to Java 17
+            javaVersion.convention(DEFAULT_JAVA_VERSION)
         }
 
-        // target JDK 16
         target.configure<JavaPluginExtension> {
             toolchain {
                 languageVersion.set(JavaLanguageVersion.of(javaExtension.javaVersion.get().majorVersion))
@@ -40,7 +42,7 @@ open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
         // enable and configure JaCoCo
         target.pluginManager.apply(JacocoPlugin::class.java)
         target.configure<JacocoPluginExtension> {
-            toolVersion = "0.8.7"
+            toolVersion = "0.8.8"
         }
         target.tasks.withType<JacocoReport> {
             reports {

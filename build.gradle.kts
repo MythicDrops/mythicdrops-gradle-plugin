@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `kotlin-dsl`
     `maven-publish`
-    id("org.jmailen.kotlinter")
+    id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
     id("org.jetbrains.dokka")
     id("com.gradle.plugin-publish")
@@ -18,7 +18,7 @@ group = "dev.mythicdrops"
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
     withJavadocJar()
     withSourcesJar()
@@ -132,7 +132,7 @@ dependencies {
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:_")
 
     // ktlint plugin
-    implementation("org.jmailen.gradle:kotlinter-gradle:_")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:_")
 
     // gradle nexus publish plugin
     implementation("io.github.gradle-nexus:publish-plugin:_")
