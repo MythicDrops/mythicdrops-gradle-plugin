@@ -93,6 +93,16 @@ tasks {
         from(dokkaJavadoc)
     }
 
+    getByName("generateChangelog") {
+        dependsOn(
+            getByName("compileJava"),
+            getByName("compileKotlin"),
+            getByName("javadoc"),
+            getByName("dokkaJavadoc"),
+            getByName("inspectClassesForKotlinIC")
+        )
+    }
+
     // use JUnit Jupiter
     withType<Test> {
         useJUnitPlatform()
