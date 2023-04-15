@@ -1,7 +1,8 @@
----
 # MegaLinter GitHub Action configuration file
 # More info at https://oxsecurity.github.io/megalinter
 name: MegaLinter
+
+permissions: read-all
 
 on:
   # Trigger mega-linter at every push. Action will also be visible from Pull Requests to master
@@ -56,7 +57,7 @@ jobs:
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: MegaLinter reports
           path: |
