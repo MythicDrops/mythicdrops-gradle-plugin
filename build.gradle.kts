@@ -68,6 +68,13 @@ gradlePlugin {
             implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsJavaPlatformPlugin"
             tags.set(listOf("kotlin", "pixeloutlaw", "convention"))
         }
+        create("mythicDropsConventionJvmTestSuite") {
+            id = "dev.mythicdrops.gradle.convention.jvm-test-suite"
+            displayName = "mythicDropsGradleConventionJvmSuite"
+            description = "Common conventions for all MythicDrops JVM Test Suite Gradle projects."
+            implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsJvmTestSuitePlugin"
+            tags.set(listOf("kotlin", "pixeloutlaw", "convention"))
+        }
         create("mythicDropsConventionKotlinJvm") {
             id = "dev.mythicdrops.gradle.convention.kotlin.jvm"
             displayName = "mythicDropsGradleConventionKotlinJvm"
@@ -93,6 +100,18 @@ tasks {
         from(dokkaJavadoc)
     }
 
+    // use JUnit Jupiter
+    withType<Test> {
+        useJUnitPlatform()
+    }
+
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+            languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+        }
+    }
+
     getByName("generateChangelog") {
         dependsOn(
             "compileJava",
@@ -107,9 +126,18 @@ tasks {
         )
     }
 
-    // use JUnit Jupiter
-    withType<Test> {
-        useJUnitPlatform()
+    // Make GitHub release depend on generating a changelog
+    val generateChangelog = getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {
+        previousRevision = project.ext.get("shipkit-auto-version.previous-tag")?.toString()
+        githubToken = System.getenv("GITHUB_TOKEN")
+        repository = "MythicDrops/mythicdrops-gradle-plugin"
+    }
+    getByName<org.shipkit.github.release.GithubReleaseTask>("githubRelease") {
+        dependsOn(generateChangelog)
+        repository = generateChangelog.repository
+        changelog = generateChangelog.outputFile
+        githubToken = System.getenv("GITHUB_TOKEN")
+        newTagRevision = System.getenv("GITHUB_SHA")
     }
 }
 
@@ -150,20 +178,6 @@ dependencies {
 
     // github api
     implementation("org.kohsuke:github-api:_")
-}
-
-val generateChangelog = tasks.getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {
-    previousRevision = project.ext.get("shipkit-auto-version.previous-tag")?.toString()
-    githubToken = System.getenv("GITHUB_TOKEN")
-    repository = "MythicDrops/mythicdrops-gradle-plugin"
-}
-
-tasks.getByName<org.shipkit.github.release.GithubReleaseTask>("githubRelease") {
-    dependsOn(generateChangelog)
-    repository = generateChangelog.repository
-    changelog = generateChangelog.outputFile
-    githubToken = System.getenv("GITHUB_TOKEN")
-    newTagRevision = System.getenv("GITHUB_SHA")
 }
 
 project.ext.set("gradle.publish.key", System.getenv("GRADLE_PUBLISH_KEY"))

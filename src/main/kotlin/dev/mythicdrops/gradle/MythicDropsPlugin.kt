@@ -2,6 +2,7 @@ package dev.mythicdrops.gradle
 
 import dev.mythicdrops.gradle.conventions.MythicDropsJavaPlatformPlugin
 import dev.mythicdrops.gradle.conventions.MythicDropsJavaPlugin
+import dev.mythicdrops.gradle.conventions.MythicDropsJvmTestSuitePlugin
 import dev.mythicdrops.gradle.conventions.MythicDropsKotlinJvmPlugin
 import dev.mythicdrops.gradle.conventions.MythicDropsMavenPublishPlugin
 import dev.mythicdrops.gradle.projects.MythicDropsBasePlugin
@@ -28,6 +29,7 @@ open class MythicDropsPlugin : Plugin<Project> {
             pluginManager.apply(MythicDropsBasePlugin::class)
             pluginManager.apply(MythicDropsJavaPlugin::class)
             pluginManager.apply(MythicDropsJavaPlatformPlugin::class)
+            pluginManager.apply(MythicDropsJvmTestSuitePlugin::class)
             pluginManager.apply(MythicDropsKotlinJvmPlugin::class)
             pluginManager.apply(MythicDropsMavenPublishPlugin::class)
         }

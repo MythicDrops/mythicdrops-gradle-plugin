@@ -19,8 +19,7 @@ val DEFAULT_JAVA_VERSION = JavaVersion.VERSION_17
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
     override fun configureProject(target: Project) {
-        val javaExtension = target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava")
-        javaExtension.apply {
+        val javaExtension = target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava").apply {
             // default to Java 17
             javaVersion.convention(DEFAULT_JAVA_VERSION)
         }
@@ -34,7 +33,7 @@ open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
         // enable and configure JaCoCo
         target.pluginManager.apply(JacocoPlugin::class.java)
         target.configure<JacocoPluginExtension> {
-            toolVersion = "0.8.8"
+            toolVersion = "0.8.10"
         }
         target.tasks.withType<JacocoReport> {
             reports {
