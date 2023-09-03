@@ -6,9 +6,7 @@ import com.adarshr.gradle.testlogger.theme.ThemeType
 import nebula.plugin.responsible.NebulaResponsiblePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 
 /**
  * Plugin that applies sensible defaults to all projects. Intended for use on root and subprojects.
@@ -30,11 +28,6 @@ open class MythicDropsBasePlugin : Plugin<Project> {
             showFailedStandardStreams = true
             showSkippedStandardStreams = false
             showPassedStandardStreams = false
-        }
-
-        // make tests use JUnit Jupiter
-        target.tasks.withType<Test>() {
-            useJUnitPlatform()
         }
     }
 }

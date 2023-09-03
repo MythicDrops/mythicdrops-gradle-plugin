@@ -68,6 +68,13 @@ gradlePlugin {
             implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsJavaPlatformPlugin"
             tags.set(listOf("kotlin", "pixeloutlaw", "convention"))
         }
+        create("mythicDropsConventionJvmTestSuite") {
+            id = "dev.mythicdrops.gradle.convention.jvm-test-suite"
+            displayName = "mythicDropsGradleConventionJvmSuite"
+            description = "Common conventions for all MythicDrops JVM Test Suite Gradle projects."
+            implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsJvmTestSuitePlugin"
+            tags.set(listOf("kotlin", "pixeloutlaw", "convention"))
+        }
         create("mythicDropsConventionKotlinJvm") {
             id = "dev.mythicdrops.gradle.convention.kotlin.jvm"
             displayName = "mythicDropsGradleConventionKotlinJvm"
