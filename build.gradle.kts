@@ -118,7 +118,6 @@ tasks {
             "compileKotlin",
             "javadoc",
             "dokkaJavadoc",
-            "inspectClassesForKotlinIC",
             "javadocJar",
             "sourcesJar",
             "generateMetadataFileForPluginMavenPublication",
