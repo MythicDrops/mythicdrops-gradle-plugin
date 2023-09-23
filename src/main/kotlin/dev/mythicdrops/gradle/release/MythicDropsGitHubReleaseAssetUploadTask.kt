@@ -39,10 +39,12 @@ abstract class MythicDropsGitHubReleaseAssetUploadTask : DefaultTask() {
         }
 
         val github = GitHubBuilder().withOAuthToken(githubToken.get()).build()
-        val githubRepository = github.getRepository(repository.get())
-            ?: throw IllegalArgumentException("${repository.get()} does not exist")
-        val githubRelease = githubRepository.getReleaseByTagName(releaseTag.get())
-            ?: throw IllegalArgumentException("Release by tag name ${releaseTag.get()} does not exist")
+        val githubRepository =
+            github.getRepository(repository.get())
+                ?: throw IllegalArgumentException("${repository.get()} does not exist")
+        val githubRelease =
+            githubRepository.getReleaseByTagName(releaseTag.get())
+                ?: throw IllegalArgumentException("Release by tag name ${releaseTag.get()} does not exist")
 
         assets.forEach {
             val contentType = Files.probeContentType(it.toPath())

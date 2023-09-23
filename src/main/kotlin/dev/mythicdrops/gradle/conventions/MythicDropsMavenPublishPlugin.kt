@@ -54,10 +54,12 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
             // we only add compileOnly dependencies if the configuration even exists
             val dependencies = project.configurations.findByName("compileOnly")?.dependencies ?: return@withXml
             if (dependencies.size > 0) {
-                val deps = root.children().find {
-                    it is groovy.util.Node && it.name().toString()
-                        .endsWith("dependencies")
-                } as groovy.util.Node? ?: root.appendNode("dependencies")
+                val deps =
+                    root.children().find {
+                        it is groovy.util.Node &&
+                            it.name().toString()
+                                .endsWith("dependencies")
+                    } as groovy.util.Node? ?: root.appendNode("dependencies")
                 dependencies.forEach { dependency ->
                     deps.appendNode("dependency").apply {
                         appendNode("groupId", dependency.group)
@@ -72,7 +74,7 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
 
     private data class SigningParams(
         val pgpKey: String,
-        val pgpPwd: String
+        val pgpPwd: String,
     )
 
     /**
@@ -80,15 +82,16 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
      */
     private data class SigningNullableParams(
         val pgpKey: String? = System.getenv("PGP_KEY"),
-        val pgpPwd: String? = System.getenv("PGP_PWD")
+        val pgpPwd: String? = System.getenv("PGP_PWD"),
     ) {
         /**
          * Converts to a non-nullable version of the params, returning null if any values are null.
          */
-        fun toSigningParams(): SigningParams? = when {
-            pgpKey == null -> null
-            pgpPwd == null -> null
-            else -> SigningParams(pgpKey, pgpPwd)
-        }
+        fun toSigningParams(): SigningParams? =
+            when {
+                pgpKey == null -> null
+                pgpPwd == null -> null
+                else -> SigningParams(pgpKey, pgpPwd)
+            }
     }
 }

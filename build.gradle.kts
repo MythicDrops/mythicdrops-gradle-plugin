@@ -92,6 +92,10 @@ gradlePlugin {
     }
 }
 
+ktlint {
+    version.set("1.0.0")
+}
+
 tasks {
     // get dokkaJavadoc task and make javadocJar depend on it
     val dokkaJavadoc by this
@@ -121,16 +125,17 @@ tasks {
             "javadocJar",
             "sourcesJar",
             "generateMetadataFileForPluginMavenPublication",
-            "generatePomFileForPluginMavenPublication"
+            "generatePomFileForPluginMavenPublication",
         )
     }
 
     // Make GitHub release depend on generating a changelog
-    val generateChangelog = getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {
-        previousRevision = project.ext.get("shipkit-auto-version.previous-tag")?.toString()
-        githubToken = System.getenv("GITHUB_TOKEN")
-        repository = "MythicDrops/mythicdrops-gradle-plugin"
-    }
+    val generateChangelog =
+        getByName<org.shipkit.changelog.GenerateChangelogTask>("generateChangelog") {
+            previousRevision = project.ext.get("shipkit-auto-version.previous-tag")?.toString()
+            githubToken = System.getenv("GITHUB_TOKEN")
+            repository = "MythicDrops/mythicdrops-gradle-plugin"
+        }
     getByName<org.shipkit.github.release.GithubReleaseTask>("githubRelease") {
         dependsOn(generateChangelog)
         repository = generateChangelog.repository
