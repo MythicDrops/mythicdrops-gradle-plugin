@@ -19,10 +19,11 @@ val DEFAULT_JAVA_VERSION = JavaVersion.VERSION_17
  */
 open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
     override fun configureProject(target: Project) {
-        val javaExtension = target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava").apply {
-            // default to Java 17
-            javaVersion.convention(DEFAULT_JAVA_VERSION)
-        }
+        val javaExtension =
+            target.extensions.create<MythicDropsJavaExtension>("mythicDropsJava").apply {
+                // default to Java 17
+                javaVersion.convention(DEFAULT_JAVA_VERSION)
+            }
 
         target.configure<JavaPluginExtension> {
             toolchain {

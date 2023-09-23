@@ -21,7 +21,7 @@ open class MythicDropsNexusStagingPlugin : Plugin<Project> {
 
     private fun enableSonatypePublishing(
         sonatypeParams: SonatypeParams?,
-        target: Project
+        target: Project,
     ) {
         if (sonatypeParams == null) {
             // if any environment variables are null, do not enable Sonatype publishing or signing
@@ -41,7 +41,7 @@ open class MythicDropsNexusStagingPlugin : Plugin<Project> {
 
     private data class SonatypeParams(
         val sonatypeUser: String,
-        val sonatypePwd: String
+        val sonatypePwd: String,
     )
 
     /**
@@ -49,15 +49,16 @@ open class MythicDropsNexusStagingPlugin : Plugin<Project> {
      */
     private data class SonatypeNullableParams(
         val sonatypeUser: String? = System.getenv("SONATYPE_USER"),
-        val sonatypePwd: String? = System.getenv("SONATYPE_PWD")
+        val sonatypePwd: String? = System.getenv("SONATYPE_PWD"),
     ) {
         /**
          * Converts to a non-nullable version of the params, returning null if any values are null.
          */
-        fun toSonatypeParams(): SonatypeParams? = when {
-            sonatypeUser == null -> null
-            sonatypePwd == null -> null
-            else -> SonatypeParams(sonatypeUser, sonatypePwd)
-        }
+        fun toSonatypeParams(): SonatypeParams? =
+            when {
+                sonatypeUser == null -> null
+                sonatypePwd == null -> null
+                else -> SonatypeParams(sonatypeUser, sonatypePwd)
+            }
     }
 }

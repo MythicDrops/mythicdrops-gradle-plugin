@@ -12,7 +12,7 @@ import org.gradle.api.logging.LogLevel
  */
 abstract class DependentPlugin(
     private val pluginDescription: String,
-    private val prerequisitePluginId: String
+    private val prerequisitePluginId: String,
 ) : Plugin<Project> {
     override fun apply(target: Project) {
         target.pluginManager.withPlugin(prerequisitePluginId) {
@@ -20,7 +20,7 @@ abstract class DependentPlugin(
                 LogLevel.INFO,
                 "Applying MythicDrops {} plugin as the \"{}\" plugin is applied",
                 pluginDescription,
-                prerequisitePluginId
+                prerequisitePluginId,
             )
             configureProject(target)
         }
