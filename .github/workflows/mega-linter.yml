@@ -24,7 +24,7 @@ jobs:
   gradle_wrapper_validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4   # docs: https://github.com/actions/checkout
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4   # docs: https://github.com/actions/checkout
         with:
           fetch-depth: '0'  # https://github.com/shipkit/shipkit-auto-version#fetch-depth-on-ci
       - name: Gradle wrapper validation
@@ -39,7 +39,7 @@ jobs:
     steps:
       # Git Checkout
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
@@ -49,7 +49,7 @@ jobs:
         id: ml
         # You can override MegaLinter flavor used to have faster performances
         # More info at https://oxsecurity.github.io/megalinter/flavors/
-        uses: oxsecurity/megalinter@v7
+        uses: oxsecurity/megalinter@688bc7466d7ab4faa83d614c2e6f9acf42b674dc # v7
         env:
           # All available variables are described in documentation
           # https://oxsecurity.github.io/megalinter/configuration/
@@ -60,7 +60,7 @@ jobs:
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           name: MegaLinter reports
           path: |
