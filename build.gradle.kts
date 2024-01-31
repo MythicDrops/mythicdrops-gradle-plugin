@@ -93,7 +93,7 @@ gradlePlugin {
 }
 
 ktlint {
-    version.set("1.0.0")
+    version.set("1.1.1")
 }
 
 tasks {

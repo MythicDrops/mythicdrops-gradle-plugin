@@ -34,7 +34,7 @@ open class MythicDropsJavaPlugin : DependentPlugin("Java", "java") {
         // enable and configure JaCoCo
         target.pluginManager.apply(JacocoPlugin::class.java)
         target.configure<JacocoPluginExtension> {
-            toolVersion = "0.8.10"
+            toolVersion = "0.8.11"
         }
         target.tasks.withType<JacocoReport> {
             reports {
