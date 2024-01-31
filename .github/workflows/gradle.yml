@@ -20,7 +20,7 @@ jobs:
   gradle_wrapper_validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3   # docs: https://github.com/actions/checkout
+      - uses: actions/checkout@v4   # docs: https://github.com/actions/checkout
         with:
           fetch-depth: '0'  # https://github.com/shipkit/shipkit-auto-version#fetch-depth-on-ci
       - name: Gradle wrapper validation
@@ -36,7 +36,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3 # https://github.com/actions/checkout
+        uses: actions/checkout@v4 # https://github.com/actions/checkout
         with:
           fetch-depth: '0' # https://github.com/shipkit/shipkit-changelog#fetch-depth-on-ci
 
@@ -90,7 +90,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3 # https://github.com/actions/checkout
+        uses: actions/checkout@v4 # https://github.com/actions/checkout
         with:
           fetch-depth: '0' # https://github.com/shipkit/shipkit-changelog#fetch-depth-on-ci
 
