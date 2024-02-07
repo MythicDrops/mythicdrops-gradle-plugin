@@ -89,6 +89,13 @@ gradlePlugin {
             implementationClass = "dev.mythicdrops.gradle.conventions.MythicDropsMavenPublishPlugin"
             tags.set(listOf("kotlin", "pixeloutlaw", "convention"))
         }
+        create("mythicDropsSpigotBuildTools") {
+            id = "dev.mythicdrops.gradle.spigot.build"
+            displayName = "mythicDropsGradleSpigotBuildTools"
+            description = "Builds and installs versions of Spigot to Maven Local."
+            implementationClass = "dev.mythicdrops.gradle.spigot.MythicDropsSpigotBuildToolsGradlePlugin"
+            tags.set(listOf("kotlin", "pixeloutlaw", "convention", "spigot"))
+        }
     }
 }
 
@@ -182,6 +189,9 @@ dependencies {
 
     // github api
     implementation("org.kohsuke:github-api:_")
+
+    // spigot remapper
+    implementation("io.github.patrick-choe:mojang-spigot-remapper:_")
 }
 
 project.ext.set("gradle.publish.key", System.getenv("GRADLE_PUBLISH_KEY"))
