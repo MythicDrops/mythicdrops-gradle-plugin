@@ -28,7 +28,7 @@ jobs:
         with:
           fetch-depth: '0'  # https://github.com/shipkit/shipkit-auto-version#fetch-depth-on-ci
       - name: Gradle wrapper validation
-        uses: gradle/wrapper-validation-action@56b90f209b02bf6d1deae490e9ef18b21a389cd4 # v1.1.0
+        uses: gradle/wrapper-validation-action@8a2cbc9ccf0390177c07106bbfb02746e8f0413b # v2.1.0
   build:
     name: MegaLinter
     runs-on: ubuntu-latest
