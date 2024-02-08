@@ -14,7 +14,7 @@ class MythicDropsSpigotBuildToolsGradlePlugin : Plugin<Project> {
         val extension =
             target.extensions.create<MythicDropsSpigotBuildToolsExtension>("spigotBuildTools").apply {
                 buildToolsLocation.convention(
-                    target.rootProject.layout.buildDirectory.file("spigot-build-tools/BuildTools.jar"),
+                    target.layout.buildDirectory.file("spigot-build-tools/BuildTools.jar"),
                 )
                 includeRemapped.convention(true)
                 version.convention("")
