@@ -47,7 +47,7 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@aff52e5be96935327d77c5529075184377dc4371 # v3
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3
 
       - name: Perform Build via Gradle
         run: ./gradlew build --scan
