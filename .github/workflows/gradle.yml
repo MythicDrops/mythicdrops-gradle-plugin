@@ -49,15 +49,7 @@ jobs:
         uses: gradle/actions/setup-gradle@aff52e5be96935327d77c5529075184377dc4371 # v3
 
       - name: Perform Build via Gradle
-        run: ./gradlew build --scan
-
-      - name: Publish to Maven Local via Gradle
-        run: ./gradlew publishToMavenLocal --scan
-
-      - name: Upload CodeCov Report
-        uses: codecov/codecov-action@ab904c41d6ece82784817410c45d8b8c02684457 # v3
-        with:
-          files: "**/build/reports/jacoco/**/*.xml"
+        run: ./gradlew build publishToMavenLocal
 
       - name: Publish Plugin and Create GitHub Release via Gradle
         # Release job, only for pushes to the main development branch

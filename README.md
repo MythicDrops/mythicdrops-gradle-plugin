@@ -84,7 +84,7 @@ mythicDropsRelease {
 The `dev.mythicdrops.gradle.convention.java` plugin will configure the following when applied to any project that also
 has the `java` plugin applied:
 
-- Configures the project to compile targeting JDK 16
+- Configures the project to compile targeting JDK 17
 - Configures the project to pass the `-parameters` javac flag when compiling
 - Applies the [`jacoco`](https://docs.gradle.org/current/userguide/jacoco_plugin.html) Gradle plugin
   - Configures the `jacoco` plugin to use JaCoCo 0.8.7
@@ -97,6 +97,15 @@ Replace `x.y.z` in the snippet below with the version you want to use.
 ```kotlin
 plugins {
     id("dev.mythicdrops.gradle.convention.java") version "x.y.z"
+}
+```
+
+You can override the JDK version the same way you'd override it in a normal Java project:
+```kotlin
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 ```
 
