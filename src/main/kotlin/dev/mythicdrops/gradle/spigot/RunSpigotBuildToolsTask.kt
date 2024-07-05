@@ -72,16 +72,21 @@ abstract class RunSpigotBuildToolsTask : DefaultTask() {
         }
     }
 
-    private fun javaexecSpigotBuildTools(mavenLocalDirectory: File, version: String, isRemapped: Boolean) {
-        val versionJar = if (isRemapped) {
-            mavenLocalDirectory.resolve(
-                "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT-remapped-mojang.jar",
-            )
-        } else {
-            mavenLocalDirectory.resolve(
-                "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT.jar",
-            )
-        }
+    private fun javaexecSpigotBuildTools(
+        mavenLocalDirectory: File,
+        version: String,
+        isRemapped: Boolean,
+    ) {
+        val versionJar =
+            if (isRemapped) {
+                mavenLocalDirectory.resolve(
+                    "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT-remapped-mojang.jar",
+                )
+            } else {
+                mavenLocalDirectory.resolve(
+                    "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT.jar",
+                )
+            }
 
         if (versionJar.exists()) {
             logger.lifecycle("Skipping $version as Spigot JAR is found at ${versionJar.absolutePath}")
