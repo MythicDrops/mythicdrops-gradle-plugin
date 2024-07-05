@@ -10,7 +10,7 @@ import org.gradle.testing.jacoco.plugins.JacocoPlugin
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 
-const val DEFAULT_JAVA_VERSION = 17
+const val DEFAULT_JAVA_VERSION = 21
 
 /**
  * Plugin that configures Java for JDK 17 and enables JaCoCo.

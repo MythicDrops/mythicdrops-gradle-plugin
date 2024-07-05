@@ -24,7 +24,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
 
         // exclude files from the build directory from being linted or formatted
         target.configure<KtlintExtension> {
-            version.set("1.2.1")
+            version.set("1.3.1")
             filter {
                 exclude { entry ->
                     entry.file.toString().contains("generated")

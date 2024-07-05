@@ -15,7 +15,7 @@ group = "dev.mythicdrops"
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
     withJavadocJar()
     withSourcesJar()
@@ -100,7 +100,7 @@ gradlePlugin {
 }
 
 ktlint {
-    version.set("1.1.1")
+    version.set("1.3.1")
 }
 
 tasks {
