@@ -41,7 +41,12 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
             // Uses ASCII-armored keys (typically provided on GitHub Actions)
             useInMemoryPgpKeys(signingParams.pgpKey, signingParams.pgpPwd)
             // Always sign Maven publications in case they go to Maven Central
-            sign(target.extensions.getByType<PublishingExtension>().publications.matching { it is MavenPublication })
+            sign(
+                target.extensions
+                    .getByType<PublishingExtension>()
+                    .publications
+                    .matching { it is MavenPublication },
+            )
         }
     }
 
@@ -57,7 +62,9 @@ open class MythicDropsMavenPublishPlugin : DependentPlugin("Maven Publish", "mav
                 val deps =
                     root.children().find {
                         it is groovy.util.Node &&
-                            it.name().toString()
+                            it
+                                .name()
+                                .toString()
                                 .endsWith("dependencies")
                     } as groovy.util.Node? ?: root.appendNode("dependencies")
                 dependencies.forEach { dependency ->

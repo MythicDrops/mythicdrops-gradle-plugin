@@ -66,59 +66,41 @@ abstract class RunSpigotBuildToolsTask : DefaultTask() {
             mavenLocalDirectory.mkdirs()
         }
 
-        normalVersion(mavenLocalDirectory, version)
+        javaexecSpigotBuildTools(mavenLocalDirectory, version, false)
         if (includeRemapped.getOrElse(false)) {
-            remappedVersion(mavenLocalDirectory, version)
+            javaexecSpigotBuildTools(mavenLocalDirectory, version, true)
         }
     }
 
-    private fun normalVersion(
+    private fun javaexecSpigotBuildTools(
         mavenLocalDirectory: File,
         version: String,
+        isRemapped: Boolean,
     ) {
         val versionJar =
-            mavenLocalDirectory.resolve(
-                "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT.jar",
-            )
+            if (isRemapped) {
+                mavenLocalDirectory.resolve(
+                    "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT-remapped-mojang.jar",
+                )
+            } else {
+                mavenLocalDirectory.resolve(
+                    "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT.jar",
+                )
+            }
+
         if (versionJar.exists()) {
             logger.lifecycle("Skipping $version as Spigot JAR is found at ${versionJar.absolutePath}")
             return
         }
         val jar = buildToolsLocation.get().asFile
         val versionDir = jar.parentFile.resolve(version)
+        val args = listOfNotNull("--rev", version, if (isRemapped) "--remapped" else null)
         fileSystemOperations.copy {
             from(jar)
             into(versionDir)
         }
         execOperations.javaexec {
-            args(listOf("--rev", version))
-            workingDir = versionDir.absoluteFile
-            jvmArgs = listOf("-Xmx1024M")
-            classpath(buildToolsLocation)
-            executable(launcher.get().executablePath)
-        }
-    }
-
-    private fun remappedVersion(
-        mavenLocalDirectory: File,
-        version: String,
-    ) {
-        val versionJar =
-            mavenLocalDirectory.resolve(
-                "org/spigotmc/spigot/$version-R0.1-SNAPSHOT/spigot-$version-R0.1-SNAPSHOT-remapped-mojang.jar",
-            )
-        if (versionJar.exists()) {
-            logger.lifecycle("Skipping $version as Spigot remapped JAR is found at ${versionJar.absolutePath}")
-            return
-        }
-        val jar = buildToolsLocation.get().asFile
-        val versionDir = jar.parentFile.resolve(version)
-        fileSystemOperations.copy {
-            from(jar)
-            into(versionDir)
-        }
-        execOperations.javaexec {
-            args(listOf("--rev", version, "--remapped"))
+            args(args)
             workingDir = versionDir.absoluteFile
             jvmArgs = listOf("-Xmx1024M")
             classpath(buildToolsLocation)
