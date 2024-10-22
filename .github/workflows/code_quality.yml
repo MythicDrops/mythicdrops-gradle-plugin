@@ -20,6 +20,6 @@ jobs:
         uses: JetBrains/qodana-action@e42ff2d2727091337983f607598abbbce4e25f1f # v2023.3.1
         with:
           linter: jetbrains/qodana-jvm
-      - uses: github/codeql-action/upload-sarif@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3
+      - uses: github/codeql-action/upload-sarif@662472033e021d55d94146f66f6058822b0b39fd # v3
         with:
           sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
