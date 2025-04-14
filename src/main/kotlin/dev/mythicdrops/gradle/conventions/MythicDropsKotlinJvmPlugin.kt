@@ -13,7 +13,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 /**
- * Plugin that configures Kotlin for JDK 17, enables Detekt, and enables/configures KTLint to use 1.2.1.
+ * Plugin that configures Kotlin for JDK 21, enables Detekt, and enables/configures KTLint to use 1.5.0.
  */
 open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbrains.kotlin.jvm") {
     override fun configureProject(target: Project) {
@@ -24,7 +24,7 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
 
         // exclude files from the build directory from being linted or formatted
         target.configure<KtlintExtension> {
-            version.set("1.3.1")
+            version.set("1.5.0")
             filter {
                 exclude { entry ->
                     entry.file.toString().contains("generated")
@@ -33,8 +33,8 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         }
 
         target.tasks.withType<KotlinCompile> {
-            kotlinOptions {
-                javaParameters = true
+            compilerOptions {
+                javaParameters.set(true)
             }
         }
 
