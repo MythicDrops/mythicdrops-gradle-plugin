@@ -33,8 +33,8 @@ open class MythicDropsKotlinJvmPlugin : DependentPlugin("Kotlin JVM", "org.jetbr
         }
 
         target.tasks.withType<KotlinCompile> {
-            kotlinOptions {
-                javaParameters = true
+            compilerOptions {
+                javaParameters.set(true)
             }
         }
 
